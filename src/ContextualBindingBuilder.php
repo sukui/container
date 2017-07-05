@@ -1,15 +1,15 @@
 <?php
 
-namespace Illuminate\Container;
+namespace ZanPHP\Container;
 
-use Illuminate\Contracts\Container\ContextualBindingBuilder as ContextualBindingBuilderContract;
+use ZanPHP\Contracts\Container\ContextualBindingBuilder as ContextualBindingBuilderContract;
 
 class ContextualBindingBuilder implements ContextualBindingBuilderContract
 {
     /**
      * The underlying container instance.
      *
-     * @var \Illuminate\Container\Container
+     * @var \ZanPHP\Container\Container
      */
     protected $container;
 
@@ -30,9 +30,8 @@ class ContextualBindingBuilder implements ContextualBindingBuilderContract
     /**
      * Create a new contextual binding builder.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \ZanPHP\Container\Container  $container
      * @param  string  $concrete
-     * @return void
      */
     public function __construct(Container $container, $concrete)
     {

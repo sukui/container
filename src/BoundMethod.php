@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Container;
+namespace ZanPHP\Container;
 
 use Closure;
 use ReflectionMethod;
@@ -12,7 +12,7 @@ class BoundMethod
     /**
      * Call the given Closure / class@method and inject its dependencies.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \ZanPHP\Container\Container  $container
      * @param  callable|string  $callback
      * @param  array  $parameters
      * @param  string|null  $defaultMethod
@@ -34,7 +34,7 @@ class BoundMethod
     /**
      * Call a string reference to a class using Class@method syntax.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \ZanPHP\Container\Container  $container
      * @param  string  $target
      * @param  array  $parameters
      * @param  string|null  $defaultMethod
@@ -64,7 +64,7 @@ class BoundMethod
     /**
      * Call a method that has been bound to the container.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \ZanPHP\Container\Container  $container
      * @param  callable  $callback
      * @param  mixed  $default
      * @return mixed
@@ -103,7 +103,7 @@ class BoundMethod
     /**
      * Get all dependencies for a given method.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \ZanPHP\Container\Container  $container
      * @param  callable|string  $callback
      * @param  array  $parameters
      * @return array
@@ -139,11 +139,11 @@ class BoundMethod
     /**
      * Get the dependency for the given call parameter.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \ZanPHP\Container\Container  $container
      * @param  \ReflectionParameter  $parameter
      * @param  array  $parameters
      * @param  array  $dependencies
-     * @return mixed
+     * @return void
      */
     protected static function addDependencyForCallParameter($container, $parameter,
                                                             array &$parameters, &$dependencies)

@@ -1,5 +1,5 @@
 {
-    "name": "illuminate/container",
+    "name": "zanphp/container",
     "description": "The Illuminate Container package.",
     "license": "MIT",
     "homepage": "https://laravel.com",
@@ -14,13 +14,16 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
-        "illuminate/contracts": "5.5.*",
+        "php": ">=5.6",
+        "zanphp/contracts": "dev-master",
         "psr/container": "~1.0"
     },
     "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
         "psr-4": {
-            "Illuminate\\Container\\": ""
+            "ZanPHP\\Container\\": "src"
         }
     },
     "extra": {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Illuminate\Container;
+namespace ZanPHP\Container;
 
 use Closure;
 use ArrayAccess;
 use LogicException;
 use ReflectionClass;
 use ReflectionParameter;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Container\Container as ContainerContract;
+use ZanPHP\Contracts\Container\BindingResolutionException;
+use ZanPHP\Contracts\Container\Container as ContainerContract;
 
 class Container implements ArrayAccess, ContainerContract
 {
@@ -135,7 +135,7 @@ class Container implements ArrayAccess, ContainerContract
      * Define a contextual binding.
      *
      * @param  string  $concrete
-     * @return \Illuminate\Contracts\Container\ContextualBindingBuilder
+     * @return \ZanPHP\Contracts\Container\ContextualBindingBuilder
      */
     public function when($concrete)
     {
@@ -248,6 +248,11 @@ class Container implements ArrayAccess, ContainerContract
      */
     protected function getClosure($abstract, $concrete)
     {
+        /**
+         * @var static $container
+         * @param array $parameters
+         * @return
+         */
         return function ($container, $parameters = []) use ($abstract, $concrete) {
             if ($abstract == $concrete) {
                 return $container->build($concrete);
@@ -475,6 +480,8 @@ class Container implements ArrayAccess, ContainerContract
         if ($this->bound($abstract)) {
             return $this->make($abstract);
         }
+
+        return null; // for ide
     }
 
     /**
@@ -487,6 +494,7 @@ class Container implements ArrayAccess, ContainerContract
      */
     public function refresh($abstract, $target, $method)
     {
+        /** @noinspection PhpUnusedParameterInspection */
         return $this->rebinding($abstract, function ($app, $instance) use ($target, $method) {
             $target->{$method}($instance);
         });
@@ -697,7 +705,7 @@ class Container implements ArrayAccess, ContainerContract
         // given abstract type. So, we will need to check if any aliases exist with this
         // type and then spin through them and check for contextual bindings on these.
         if (empty($this->abstractAliases[$abstract])) {
-            return;
+            return null; // for ide
         }
 
         foreach ($this->abstractAliases[$abstract] as $alias) {
@@ -705,6 +713,8 @@ class Container implements ArrayAccess, ContainerContract
                 return $binding;
             }
         }
+
+        return null; // for ide
     }
 
     /**
@@ -718,6 +728,8 @@ class Container implements ArrayAccess, ContainerContract
         if (isset($this->contextual[end($this->buildStack)][$abstract])) {
             return $this->contextual[end($this->buildStack)][$abstract];
         }
+
+        return null; // for ide
     }
 
     /**
@@ -738,7 +750,7 @@ class Container implements ArrayAccess, ContainerContract
      * @param  string  $concrete
      * @return mixed
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ZanPHP\Contracts\Container\BindingResolutionException
      */
     public function build($concrete)
     {
@@ -755,6 +767,7 @@ class Container implements ArrayAccess, ContainerContract
         // an abstract type such as an Interface of Abstract Class and there is
         // no binding registered for the abstractions so we need to bail out.
         if (! $reflector->isInstantiable()) {
+            /** @noinspection PhpVoidFunctionResultUsedInspection */
             return $this->notInstantiable($concrete);
         }
 
@@ -856,7 +869,7 @@ class Container implements ArrayAccess, ContainerContract
      * @param  \ReflectionParameter  $parameter
      * @return mixed
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ZanPHP\Contracts\Container\BindingResolutionException
      */
     protected function resolvePrimitive(ReflectionParameter $parameter)
     {
@@ -869,6 +882,8 @@ class Container implements ArrayAccess, ContainerContract
         }
 
         $this->unresolvablePrimitive($parameter);
+
+        return null; // for IDE
     }
 
     /**
@@ -877,7 +892,7 @@ class Container implements ArrayAccess, ContainerContract
      * @param  \ReflectionParameter  $parameter
      * @return mixed
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ZanPHP\Contracts\Container\BindingResolutionException
      */
     protected function resolveClass(ReflectionParameter $parameter)
     {
@@ -903,7 +918,7 @@ class Container implements ArrayAccess, ContainerContract
      * @param  string  $concrete
      * @return void
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ZanPHP\Contracts\Container\BindingResolutionException
      */
     protected function notInstantiable($concrete)
     {
@@ -924,7 +939,7 @@ class Container implements ArrayAccess, ContainerContract
      * @param  \ReflectionParameter  $parameter
      * @return void
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ZanPHP\Contracts\Container\BindingResolutionException
      */
     protected function unresolvablePrimitive(ReflectionParameter $parameter)
     {
@@ -1165,11 +1180,12 @@ class Container implements ArrayAccess, ContainerContract
     /**
      * Set the shared instance of the container.
      *
-     * @param  \Illuminate\Contracts\Container\Container|null  $container
+     * @param  \ZanPHP\Contracts\Container\Container|null  $container
      * @return static
      */
     public static function setInstance(ContainerContract $container = null)
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return static::$instance = $container;
     }
 
