@@ -10,10 +10,15 @@ require __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . "/../../contracts/vendor/autoload.php";
 
 
+
+
+
 for ($i = 0; $i < 10; $i++) {
     $ns = __NAMESPACE__;
     eval("namespace $ns; class C$i { }");
 }
+
+
 
 
 call_user_func(function() {
@@ -80,6 +85,16 @@ call_user_func(function() {
     assert($testBindVar->a === 42);
 
 
+
+    class TestBindVarA {
+        function __construct($a)
+        {
+            $this->a = $a;
+        }
+    }
+    $container = Container::getInstance();
+    $container->bind("testBindVarA", TestBindVarA::class);
+    $testBindVar = make("testBindVarA", ["a" => 42]);
 
 
 
